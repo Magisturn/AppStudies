@@ -26,16 +26,17 @@ namespace AppStudies.Pages
         //Page not reloaded
         public IActionResult OnPostDelete([FromBody] csModalData modalData)
         {
-            Message = $"OnPostDelete fired: {modalData.postdata}";
+            Message = $"OnPostDelete from Javascript fired: {modalData.postdata}";
 
             //Page not reloaded as Post is outside a form via javascript
-            return Page();
+            return Partial("Studies/_PartialModalsLaunch", Message);
         }
 
 
         public IActionResult OnPostSelect(Guid groupId)
         {
             Message = $"OnPostSelect fired: {groupId}";
+            //return Partial("Studies/Modals/_PartialModalsLaunch", Message);
             return Page();
         }
     }
