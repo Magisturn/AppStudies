@@ -14,11 +14,14 @@
 
     <div class="row row-cols-1 row-cols-lg-4 align-items-stretch g-4 py-5">
         <div class="col-md-7 col-lg-8">
-            <span class="alert alert-info" role="alert">
-                @Model.Message
-            </span>
+            @foreach (var item in Model.Messages)
+            {
+                <span class="alert alert-info" role="alert">
+                    @item
+                </span>
+            }
         </div>
-        <partial name="_PartialModalsLaunch" model="Model.Message" />
+        <partial name="_PartialModalsLaunch" model="Model.Messages" />
 
         <div class="col-md-7 col-lg-8">
             <!-- Button trigger modal -->

@@ -18,7 +18,7 @@ namespace AppStudies.Pages
 
     public class ModalsLaunchModel : PageModel
     {
-        public string Message { get; set; }
+        public List<string> Messages { get; set; } = new List<string>();
 
         //As the modals does not send the data as a Form the [FromBody] needs to be used
         //try with curl command
@@ -26,17 +26,17 @@ namespace AppStudies.Pages
         //Page not reloaded
         public PartialViewResult OnPostDelete([FromBody] csModalData modalData)
         {
-            Message = $"OnPostDelete from js fired: Modal Guid: {modalData.postdata}. OnPostDelete Guid: {Guid.NewGuid()}";
+            Messages.Add($"OnPostDelete from js fired: Modal Guid: {modalData.postdata}");
+            Messages.Add($"OnPostDelete Guid: {Guid.NewGuid()}");
 
             //Page not reloaded as Post is outside a form via javascript
-            return Partial("Studies/Modals/_PartialModalsLaunch", Message);
+            return Partial("Studies/Modals/_PartialModalsLaunch", Messages);
         }
 
 
         public IActionResult OnPostSelect(Guid groupId)
         {
-            Message = $"OnPostSelect fired: {groupId}";
-            //return Partial("Studies/Modals/_PartialModalsLaunch", Message);
+            Messages.Add($"OnPostSelect fired: {groupId}");
             return Page();
         }
     }
