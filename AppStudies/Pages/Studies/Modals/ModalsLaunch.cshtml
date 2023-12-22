@@ -40,7 +40,9 @@
             <!-- Button trigger modal with a Post-->
             <button type="button" class="w-100 btn btn-primary my-1" data-bs-toggle="modal" data-bs-target="#dangerModal"
                     data-seido-modal-title="dangerModal" data-seido-modal-body="dangerModal body"
-                    data-seido-modal-post-data="@Guid.NewGuid()" data-seido-modal-post-url="@Url.PageLink(Request.Path, "Delete")">
+                    data-seido-modal-post-data="@Guid.NewGuid()"
+                    data-seido-modal-post-url="@Url.PageLink(Request.Path, "Delete")"
+                    data-seido-modal-refresh-tag-id="partial-modal-launch">
                 Launch dangerModal with post outside form-tag via javascript, page not reloaded
             </button>
         </div>

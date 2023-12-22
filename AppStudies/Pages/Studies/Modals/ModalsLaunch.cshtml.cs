@@ -24,12 +24,12 @@ namespace AppStudies.Pages
         //try with curl command
         //curl --location 'https://localhost:11774/Studies/ModalsLaunch' --header 'Content-Type: application/json' --data '{"id":"123-123"}'
         //Page not reloaded
-        public IActionResult OnPostDelete([FromBody] csModalData modalData)
+        public PartialViewResult OnPostDelete([FromBody] csModalData modalData)
         {
             Message = $"OnPostDelete from Javascript fired: {modalData.postdata}";
 
             //Page not reloaded as Post is outside a form via javascript
-            return Partial("Studies/_PartialModalsLaunch", Message);
+            return Partial("Studies/Modals/_PartialModalsLaunch", Message);
         }
 
 

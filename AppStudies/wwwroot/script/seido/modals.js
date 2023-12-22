@@ -29,11 +29,13 @@ function launchModal (event)  {
     //mod_post_data = parameter to post
     var mod_post_data = { postdata: btn.dataset.seidoModalPostData };
     var mod_post_url = btn.dataset.seidoModalPostUrl;
+    var mod_post_refresh_tag = btn.dataset.seidoModalRefreshTagId;
 
     btn_ok.addEventListener('click', async event => {
 
       if (mod_post_url)
       {
+        console.log(mod_post_url);
         try {
           //send the data using post and await the reply
           const response = await fetch(mod_post_url, {
@@ -42,9 +44,16 @@ function launchModal (event)  {
               body: mod_post_data ? JSON.stringify(mod_post_data) : null
           });
           const result = await response.text();
+          console.log(result);
     
           if (!response.ok) {
             throw new Error(`Transmission error ${response.status} posting to ${mod_post_url}`);
+          }
+
+          //refresh the partial tag
+            console.log(document.getElementById(mod_post_refresh_tag));
+          if (mod_post_refresh_tag) {
+            document.getElementById(mod_post_refresh_tag).innerHTML = result;
           }
         }
         catch (e) {
