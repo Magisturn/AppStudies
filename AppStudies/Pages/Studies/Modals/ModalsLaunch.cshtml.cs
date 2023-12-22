@@ -26,7 +26,7 @@ namespace AppStudies.Pages
         //Page not reloaded
         public PartialViewResult OnPostDelete([FromBody] csModalData modalData)
         {
-            Message = $"OnPostDelete from Javascript fired: {modalData.postdata}";
+            Message = $"OnPostDelete from js fired: Modal Guid: {modalData.postdata}. OnPostDelete Guid: {Guid.NewGuid()}";
 
             //Page not reloaded as Post is outside a form via javascript
             return Partial("Studies/Modals/_PartialModalsLaunch", Message);

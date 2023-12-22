@@ -53,7 +53,7 @@ function launchModal (event)  {
           //refresh the partial tag
             console.log(document.getElementById(mod_post_refresh_tag));
           if (mod_post_refresh_tag) {
-            document.getElementById(mod_post_refresh_tag).innerHTML = result;
+            document.getElementById(mod_post_refresh_tag).outerHTML = result;
           }
         }
         catch (e) {
