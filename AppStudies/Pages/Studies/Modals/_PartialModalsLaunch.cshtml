@@ -1,8 +1,8 @@
 ﻿@model List<string>
-<div class="col-md-7 col-lg-8" id="partial-modal-launch">
+<div class="row row-cols-1 row-cols-lg-4 align-items-stretch g-4 py-5" id="partial-modal-launch">
     @foreach (var item in Model)
     {
-        <span class="alert alert-info" role="alert">
+        <span class="col-md-7 col-lg-8 alert alert-info" role="alert">
             @item
         </span>
     }
