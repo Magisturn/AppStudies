@@ -132,7 +132,7 @@ namespace AppStudies.Pages
             //Properties from Model which is to be edited in the <form>
             public Guid QuoteId { get; init; } = Guid.NewGuid();
 
-            [Required(ErrorMessage = "You type provide a quote")]
+            [Required(ErrorMessage = "You must provide a quote")]
             public string Quote { get; set; }
 
             [Required(ErrorMessage = "You must provide an author")]

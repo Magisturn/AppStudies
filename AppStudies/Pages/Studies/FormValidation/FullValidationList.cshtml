@@ -22,10 +22,10 @@
         </h2>
 
         <!-- Server side validation errors, rough but just in case client side validation is not working or tampered with -->
-        @if (Model.HasValidationErrors)
+        @if (Model.ValidationResult.HasErrors)
         {
             <div class="row g-3">
-                @foreach (var item in Model.ValidationErrorMsgs)
+                @foreach (var item in Model.ValidationResult.ErrorMsgs)
                 {
                     <span class="alert alert-danger" role="alert">
                         @item
@@ -71,13 +71,13 @@
                             <!--Fields to edit -->
                             <input asp-for="QuotesIM[k].editQuote" class="form-control" value="@Model.QuotesIM[k].editQuote" />
                             <span asp-validation-for="QuotesIM[k].editQuote" class="invalid-feedback"></span>
-                            <label for="QuotesIM[k].editAuthor">quote</label>
+                            <label asp-for="QuotesIM[k].editAuthor">quote</label>
                         </div>
                         <div class="form-floating col-md-10 themed-grid-col">
                             <!--Fields to edit -->
                             <input asp-for="QuotesIM[k].editAuthor" class="form-control" value="@Model.QuotesIM[k].editAuthor" />
                             <span asp-validation-for="QuotesIM[k].editAuthor" class="invalid-feedback"></span>
-                            <label for="QuotesIM[k].editAuthor">author</label>
+                            <label asp-for="QuotesIM[k].editAuthor">author</label>
                         </div>
                         <div class="form-floating col-md-2 themed-grid-col">
                             <button type="submit" asp-page-handler="Edit" class="btn btn-success btn-sm m-1">

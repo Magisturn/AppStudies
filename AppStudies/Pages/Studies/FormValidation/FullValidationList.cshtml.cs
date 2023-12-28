@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using AppStudies.SeidoHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -30,10 +31,8 @@ namespace AppStudies.Pages
         [BindProperty]
         public List<csFamousQuoteIM> QuotesIM { get; set; }
 
-        //For Server Side Validation set by IsValid()
-        public bool HasValidationErrors { get; set; }
-        public IEnumerable<string> ValidationErrorMsgs { get; set; }
-        public IEnumerable<KeyValuePair<string, ModelStateEntry>> InvalidKeys { get; set; }
+        //For Validation
+        public reModelValidationResult ValidationResult { get; set; } = new reModelValidationResult(false, null, null);
 
         #region HTTP Requests
         public IActionResult OnGet()
@@ -54,8 +53,9 @@ namespace AppStudies.Pages
             int idx = QuotesIM.FindIndex(q => q.QuoteId == quoteId);
             string[] keys = { $"QuotesIM[{idx}].editQuote",
                             $"QuotesIM[{idx}].editAuthor"};
-            if (!IsValid(keys))
+            if (!ModelState.IsValidPartially(out reModelValidationResult validationResult, keys))
             {
+                ValidationResult = validationResult;
                 return Page();
             }
 
@@ -178,24 +178,6 @@ namespace AppStudies.Pages
             }
             #endregion
 
-        }
-        #endregion
-
-        #region Server Side Validation
-        private bool IsValid(string[] validateOnlyKeys = null)
-        {
-            InvalidKeys = ModelState
-               .Where(s => s.Value.ValidationState == ModelValidationState.Invalid);
-
-            if (validateOnlyKeys != null)
-            {
-                InvalidKeys = InvalidKeys.Where(s => validateOnlyKeys.Any(vk => vk == s.Key));
-            }
-
-            ValidationErrorMsgs = InvalidKeys.SelectMany(e => e.Value.Errors).Select(e => e.ErrorMessage);
-            HasValidationErrors = InvalidKeys.Count() != 0;
-
-            return !HasValidationErrors;
         }
         #endregion
     }
