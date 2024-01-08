@@ -1,0 +1,30 @@
+﻿Purpose:
+Add CRUD User Authorized to access to a class in Models
+Add Serverside model level Authorization and Forbid access to resoure if User not authorized to access it
+
+Steps:
+1. In Application add a folder named ModelAuthorization
+
+2. In folder ModelAuthorization add two classes
+   public static class csMusicGroupOperations
+   public class csMusicGroupAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, csMusicGroup>
+
+3. In ListOfGroups add namespaces
+using Microsoft.AspNetCore.Authorization;
+using AppMusicRazor.ModelAuthorization;
+
+4. Inject IAuthorizationService into ListOfGroups constructor. Set a private field _authService to the injected service
+
+5. Modify OnPostDeleteGroup to check if User is Authorized to delete a group
+//alternative to make authorization specific to an individual musicgroup
+//var mg = await _service.ReadMusicGroupAsync(groupId, true);
+//var result = await _authService.AuthorizeAsync(User, mg, csMusicGroupOperations.Delete);
+  var result = await _authService.AuthorizeAsync(User, null, csMusicGroupOperations.Delete);
+  if (!result.Succeeded)
+  {
+     return Forbid();
+  }
+
+6. Run the app and see that you are also redirected to Login in case you try to delete a group
+
+

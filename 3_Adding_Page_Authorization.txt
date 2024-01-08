@@ -1,0 +1,18 @@
+﻿Purpose:
+Add Serverside page level Authorization and Forbid access to a page if User not authorized to access it
+
+Steps:
+1. Create a folder in Pages called Member. Move Pages EditGroup och Seed into Members 
+
+2. Update all references to EditGroup and Seed to new location, use Find
+(ViewGroup, _Layout, ListOfGroups)
+
+3. In Program.cs set Members folder to demand Authorization for all pages in the folder
+builder.Services.AddRazorPages(option =>
+{
+    option.Conventions.AuthorizeFolder("/Members");
+});
+
+4. Execute and try to edit with and without being logged in
+
+5. Notice that Delete group is still working, why?

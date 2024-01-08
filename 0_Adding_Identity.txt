@@ -1,37 +1,48 @@
-﻿
-0. Update all packages to latest .NET 7 versions
+﻿Purpose:
+Add Asp.Net.Core Identity
+Add Asp.Net.Core Identity models to Application Database
 
-1. In Models add NuGet packages
+Steps:
+
+1. Update all packages to latest .NET 7 versions
+
+2. In Models add NuGet packages
     <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.14" />
   </ItemGroup>
 
-2. In Models add a csUser class inherited from IdentityUser
+3. In Models add a csUser class inherited from IdentityUser
 	public class csUser : IdentityUser<Guid>
 	{
 
-3. In Db Context add name spaces
+4. In Db Context add name spaces
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-4. In Db Context have csMainDbContext inherit from IdentityDbContext instead of DbContext
+
+5. In Db Context have csMainDbContext inherit from IdentityDbContext instead of DbContext
 public class csMainDbContext : IdentityDbContext<csUser, IdentityRole<Guid>, Guid>
 
-5. Add a Service extention method defining what database Indentity should be using
+6. Add a Service extention method defining what database Indentity should be using
 public static class csMainDbContextExtensions
 {
     public static IServiceCollection AddIdentityDbContext(this IServiceCollection serviceCollection)
     {
 
-6. In Programs.cs add using
+7. In Program make sure the app will use Authentication and Authorization
+app.UseAuthentication();
+app.UseAuthorization();
+
+8. In Programs.cs add using
 using Models;
 using DbContext;
 
-7. In Programs.cs add a DB Context for the Identity Services from csMainDbContext
+9. In Programs.cs add a DB Context for the Identity Services from csMainDbContext
 builder.Services.AddIdentityDbContext();
 
-8. In Programs.cs add and configure IdentityServices to DbContext.csMainDbContext
+10. In Programs.cs add and configure IdentityServices to DbContext.csMainDbContext
 builder.Services.AddDefaultIdentity<csUser>(options => {
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
@@ -40,6 +51,6 @@ builder.Services.AddDefaultIdentity<csUser>(options => {
 })
     .AddEntityFrameworkStores<DbContext.csMainDbContext>();
 
-9. Delete the database in Azure Data Studio
+11. Delete the database in Azure Data Studio
 
-10. Make a new initial-migration and database update. Investigate the database created
+12. Make a new initial-migration and database update. Investigate the database created

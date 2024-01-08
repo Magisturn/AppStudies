@@ -1,0 +1,30 @@
+﻿Purpose:
+Add Asp.Net.Core Identity Registration capabilities with Email verification
+
+Steps:
+1. In Models add first name and last name to csUser
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+2. In Services add a NuGet package
+   <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.3.0" />
+  </ItemGroup>
+
+3. In Services add a Service to send email
+ public class csEmailService : IEmailSender
+
+4. In Program.cs add csEmailService as a transient Service using Dependecy Injection
+
+5. In Application create a directory TempMail for all emails
+
+6. Add a Register Razor page and model to Pages/Account/
+
+7. Add a RegisterConfirmation and model to Pages/Account/
+
+8. In _Layout add a menu item to Register page
+
+9. Add ConfirmEmail Razor page and model to Pages/Account/
+
+10. Execute and register users to the database
+
