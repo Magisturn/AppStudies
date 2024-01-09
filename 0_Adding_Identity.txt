@@ -1,4 +1,5 @@
 ﻿Purpose:
+In AppMusicRazor
 Add Asp.Net.Core Identity
 Add Asp.Net.Core Identity models to Application Database
 
@@ -16,11 +17,15 @@ Steps:
 	public class csUser : IdentityUser<Guid>
 	{
 
-4. In Db Context add name spaces
+4. In DbContext, csMainDbContext add name spaces
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
+Add NuGet Packages
+    <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
+    </ItemGroup>
 
 5. In Db Context have csMainDbContext inherit from IdentityDbContext instead of DbContext
 public class csMainDbContext : IdentityDbContext<csUser, IdentityRole<Guid>, Guid>
@@ -31,7 +36,10 @@ public static class csMainDbContextExtensions
     public static IServiceCollection AddIdentityDbContext(this IServiceCollection serviceCollection)
     {
 
-7. In Program make sure the app will use Authentication and Authorization
+7. In AppMusicRaozr, csProgram.cs make sure the app will use Authentication and Authorization. Add it before
+app.MapRazorPages()
+
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -41,6 +49,7 @@ using DbContext;
 
 9. In Programs.cs add a DB Context for the Identity Services from csMainDbContext
 builder.Services.AddIdentityDbContext();
+Add it after builder.Services.AddRazorPages()
 
 10. In Programs.cs add and configure IdentityServices to DbContext.csMainDbContext
 builder.Services.AddDefaultIdentity<csUser>(options => {
@@ -51,6 +60,6 @@ builder.Services.AddDefaultIdentity<csUser>(options => {
 })
     .AddEntityFrameworkStores<DbContext.csMainDbContext>();
 
-11. Delete the database in Azure Data Studio
+11. Delete the database in Azure Data Studio as well as the Migration in VS
 
 12. Make a new initial-migration and database update. Investigate the database created

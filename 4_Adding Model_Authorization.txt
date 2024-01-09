@@ -1,4 +1,5 @@
 ﻿Purpose:
+In AppMusicRazor
 Add CRUD User Authorized to access to a class in Models
 Add Serverside model level Authorization and Forbid access to resoure if User not authorized to access it
 
@@ -25,6 +26,9 @@ using AppMusicRazor.ModelAuthorization;
      return Forbid();
   }
 
-6. Run the app and see that you are also redirected to Login in case you try to delete a group
+6. In Program.cs add Authorization add IAuthorizationHandler - csMusicGroupAuthorizationHandler as a Singelton Service
+builder.Services.AddSingleton<IAuthorizationHandler, csMusicGroupAuthorizationHandler>();
+
+7. Run the app and see that you are also redirected to Login in case you try to delete a group
 
 

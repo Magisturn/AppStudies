@@ -1,4 +1,5 @@
 ﻿Purpose:
+In AppMusicRazor
 Add Serverside page level Authorization and Forbid access to a page if User not authorized to access it
 
 Steps:
@@ -13,6 +14,9 @@ builder.Services.AddRazorPages(option =>
     option.Conventions.AuthorizeFolder("/Members");
 });
 
-4. Execute and try to edit with and without being logged in
+4. In _Layout change menu link to Seed so it is only visible if User is Authenticated
+@if (User.Identity.IsAuthenticated)
 
-5. Notice that Delete group is still working, why?
+5. Execute and try to edit with and without being logged in
+
+6. Notice that Delete group is still working, why?

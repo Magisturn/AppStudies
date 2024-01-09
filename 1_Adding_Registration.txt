@@ -1,4 +1,5 @@
 ﻿Purpose:
+In AppMusicRazor
 Add Asp.Net.Core Identity Registration capabilities with Email verification
 
 Steps:
@@ -22,9 +23,19 @@ Steps:
 
 7. Add a RegisterConfirmation and model to Pages/Account/
 
-8. In _Layout add a menu item to Register page
+8. Add ConfirmEmail Razor page and model to Pages/Account/
 
-9. Add ConfirmEmail Razor page and model to Pages/Account/
+9. In Pages/Shared/_Layout add a menu item to Register page
 
 10. Execute and register users to the database
+
+10. Make a Migration and database update to reflect the changes in csUser
+
+11. Execute and register users to the database
+
+12. Check the AspNetUser Table in the database
+
+13. Check the TempMail folder and open the email, click on the link
+
+14. Check again the AspNetUser Table in the database
 

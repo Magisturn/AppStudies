@@ -1,8 +1,10 @@
 ﻿Purpose:
+In AppMusicRazor
 Adjust UI to hide and show buttons depending on User Authorized to access the resource
 
 Steps:
 1. In ListOfGroups
+    @using Microsoft.AspNetCore.Authorization;
     @using AppMusicRazor.ModelAuthorization;
     @using Microsoft.AspNetCore.Identity;
     @inject IAuthorizationService _authService;
@@ -10,7 +12,7 @@ Steps:
 2.  Make a call to AuthorizeAsync to check if User is Authorized to access the property in the Model
 @{
     ViewData["Title"] = "List groups";
-    var authResult = await _authService.AuthorizeAsync(User, Model.MusicGroups.First(), csMusicGroupOperations.Delete);
+    var authResult = await _authService.AuthorizeAsync(User, Model.MusicGroups.FirstOrDefault(), csMusicGroupOperations.Delete);
 }
 
 3. In ListOfGroups remove New, Edit and Delete buttons if User is not Authenticated to access resoure
