@@ -1,5 +1,9 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 
 using Configuration;
 using Models;
@@ -9,7 +13,7 @@ namespace DbContext;
 //DbContext namespace is a fundamental EFC layer of the database context and is
 //used for all Database connection as well as for EFC CodeFirst migration and database updates 
 
-public class csMainDbContext : Microsoft.EntityFrameworkCore.DbContext
+public class csMainDbContext : IdentityDbContext<csUser, IdentityRole<Guid>, Guid>
 {
     #region class - Table mapping
 
@@ -191,6 +195,35 @@ public class csMainDbContext : Microsoft.EntityFrameworkCore.DbContext
         }
     }
     #endregion
+}
+
+public static class csMainDbContextExtensions
+{
+    public static IServiceCollection AddIdentityDbContext(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddDbContext<csMainDbContext>(options =>
+        {
+            var loginDetail = csAppConfig.DbLoginDetails("sysadmin");
+            if (loginDetail.DbServer == "SQLServer")
+            {
+                options.UseSqlServer(loginDetail.DbConnectionString,
+                        options => options.EnableRetryOnFailure());
+            }
+            else if (loginDetail.DbServer == "MariaDb")
+            {
+                options.UseMySql(loginDetail.DbConnectionString, ServerVersion.AutoDetect(loginDetail.DbConnectionString));
+            }
+            else if (loginDetail.DbServer == "Postgres")
+            {
+                options.UseNpgsql(loginDetail.DbConnectionString);
+            }
+            else if (loginDetail.DbServer == "SQLite")
+            {
+                options.UseSqlite(loginDetail.DbConnectionString);
+            }
+        });
+        return serviceCollection;
+    }
 }
 
 

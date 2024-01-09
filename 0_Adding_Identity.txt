@@ -9,8 +9,8 @@ Steps:
 
 2. In Models add NuGet packages
     <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.15" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.15" />
   </ItemGroup>
 
 3. In Models add a csUser class inherited from IdentityUser
@@ -24,7 +24,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 Add NuGet Packages
     <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.15" />
     </ItemGroup>
 
 5. In Db Context have csMainDbContext inherit from IdentityDbContext instead of DbContext
@@ -60,6 +60,7 @@ builder.Services.AddDefaultIdentity<csUser>(options => {
 })
     .AddEntityFrameworkStores<DbContext.csMainDbContext>();
 
-11. Delete the database in Azure Data Studio as well as the Migration in VS
+11. In UserSecrets enable a DBConnectionstring to a database called appstudies to use for identity
+    Delete the database in Azure Data Studio as well as the Migration in VS
 
 12. Make a new initial-migration and database update. Investigate the database created

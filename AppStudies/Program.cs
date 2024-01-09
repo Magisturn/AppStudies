@@ -4,6 +4,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
+using Models;
+using DbContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,14 @@ builder.Services.AddRazorPages(o =>
 });
 */
 #endregion
+builder.Services.AddIdentityDbContext();
+builder.Services.AddDefaultIdentity<csUser>(options => {
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+})
+    .AddEntityFrameworkStores<DbContext.csMainDbContext>();
 
 #region Injecting a dependency service
 //Add the QuoteServices used in the studies, simple singleton list, no database, 
@@ -62,13 +72,13 @@ app.UseHttpsRedirection();
 //Create a wwwroot directory.
 //Copy the files from SimpleStatic into wwwroot directory
 
-//Enable static and default files
-app.UseDefaultFiles();
 app.UseStaticFiles();
 
 //try https://localhost:5001/index.html
 //to make this default, simply change app.MapGet("/hello",...) 
-
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 #endregion
 
 #region L1.2 Controlling the hosting environment, L1.4 Enabling Razor Pages
